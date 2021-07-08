@@ -201,14 +201,14 @@ transicao: ;funcao que bota a tela preta, deixa la um tempinho com o delay e que
   call delay1
   call tela_preta
   call delay1
-ret
+  ret
 
 sequencia1: ;sequencia de cores da primeira fase: rp
   call tela_vermelho
   call transicao
   call tela_rosa
   call delay1
-ret
+  ret
 
 sequencia2: ;sequencia de cores da segunda fase: gpgb
   call tela_verde
@@ -219,7 +219,7 @@ sequencia2: ;sequencia de cores da segunda fase: gpgb
   call transicao
   call tela_azul
   call delay1
-ret
+  ret
 
 sequencia3: ;sequencia de cores da terceira fase: rgbppb
   call tela_vermelho
@@ -234,7 +234,7 @@ sequencia3: ;sequencia de cores da terceira fase: rgbppb
   call transicao
   call tela_azul
   call delay1
-ret
+  ret
 
 sequencia4: ;sequencia de cores da quarta fase: pbbgrrpb
   call tela_rosa
@@ -253,7 +253,7 @@ sequencia4: ;sequencia de cores da quarta fase: pbbgrrpb
   call transicao
   call tela_azul
   call delay1
-ret
+  ret
 
 sequencia5: ;sequencia de cores da quinta fase: rpbgprgbpg
   call tela_vermelho
@@ -276,7 +276,7 @@ sequencia5: ;sequencia de cores da quinta fase: rpbgprgbpg
   call transicao
   call tela_verde
   call delay1
-ret
+  ret
   
 print_msg:  ; funcao que usamos para printar a mensagem que espera a resposta
             ;string msg_resposta
@@ -295,20 +295,20 @@ print_msg:  ; funcao que usamos para printar a mensagem que espera a resposta
 
   mov si, msg_resposta
   call prints
-ret
+  ret
 
 init_video: ;funcao que vai setar o modo video quando necessario
   mov ah,0
   mov al,12h
   int 10h
-ret
+  ret
 
 clear_reg:
   mov ax, 0
  	mov ds, ax
  	mov es, ax
 	mov bh, 0
-ret
+  ret
 
 strcmp:              ; mov si, string1, mov di, string2, compara as strings apontadas por si e di
   .loop1:
@@ -321,10 +321,10 @@ strcmp:              ; mov si, string1, mov di, string2, compara as strings apon
     jmp .loop1
   .notequal:
     clc
-  ret
+    ret
   .equal:
     stc
-  ret
+    ret
 
 tela_loser: ;tela que usamos quando o usuario entra com a resposta errada
   call init_video
@@ -365,7 +365,7 @@ tela_loser: ;tela que usamos quando o usuario entra com a resposta errada
   call prints
   call ESC
   jmp tela_loser
-ret
+  ret
 
 tela_proxfase: ;tela que usamos quando o usuario entra com a resposta errada
   call init_video
