@@ -120,27 +120,7 @@ prints:             ; mov si, string
     .endloop:
     ret
  
-clear:                   ; mov bl, color
-  ; set the cursor to top left-most corner of screen
-  mov dx, 0 
-  mov bh, 0      
-  mov ah, 0x2
-  int 0x10
- 
-  ; print 2000 blank chars to clean  
-  mov cx, 2000 
-  mov bh, 0
-  mov al, 0x20 ; blank char
-  mov ah, 0x9
-  int 0x10
- 
-  ; reset cursor to top left-most corner of screen
-  mov dx, 0 
-  mov bh, 0      
-  mov ah, 0x2
-  int 0x10
-  ret
- 
+
 ESC: ;funcao pra identificar o pressionamento do esc
   call getchar
   cmp al, 27
@@ -148,7 +128,7 @@ ESC: ;funcao pra identificar o pressionamento do esc
  
   ret
  
-ENT: ;funcao pra identificar o pressionamento do enter
+ENT: ;funcao pra identificar o pressionamento do enter e ir para tela da primeira fase
   call getchar
   cmp al, 13
   je jogar1
@@ -409,7 +389,6 @@ tela_proxfase: ;tela que usamos quando o usuario entra com a resposta errada
   cmp al,13
   je .done
 
-
   .done:
   ret
 
@@ -550,7 +529,7 @@ Menu:
         ;Comparando com '3'
         cmp al, 51
         je creditos
- 
+
         ;Caso não seja nem '1' ou '2' ou '3' ele vai receber a string dnv
         jne selecao
 jogar:
@@ -563,7 +542,7 @@ jogar:
   mov bh, 0
   mov bl, 0
   int 10h
- 
+  ;colocando a mensagem "pressione enter para continuar"
   mov ah, 02h  ;Setando o cursor
   mov bh, 0    ;Pagina 0
   mov dh, 15    ;Linha
@@ -695,7 +674,7 @@ manual:
   mov bh, 0
   mov bl, 0
   int 10h 
- 
+  ;colocando a string "Cores do Jogo:"
   mov ah, 02h  ;Setando o cursor
   mov bh, 0    ;Pagina 0
   mov dh, 3    ;Linha
@@ -704,7 +683,7 @@ manual:
   int 10h
   mov si, manual_1
   call prints
-
+  ;colocando a string "ROSA:"
   mov ah, 02h  ;Setando o cursor
   mov bh, 0    ;Pagina 0
   mov dh, 3    ;Linha
@@ -713,7 +692,7 @@ manual:
   int 10h
   mov si, c_rosa
   call prints
-
+  ;colocando a string "verde:"
   mov ah, 02h  ;Setando o cursor
   mov bh, 0    ;Pagina 0
   mov dh, 3    ;Linha
@@ -722,7 +701,7 @@ manual:
   int 10h
   mov si, c_verde
   call prints
-
+  ;colocando a string "VERMELHO"
   mov ah, 02h  ;Setando o cursor
   mov bh, 0    ;Pagina 0
   mov dh, 3    ;Linha
@@ -731,7 +710,7 @@ manual:
   int 10h
   mov si, c_vermelho
   call prints
-
+  ;colocando a string "AZUL"
   mov ah, 02h  ;Setando o cursor
   mov bh, 0    ;Pagina 0
   mov dh, 3    ;Linha
@@ -741,7 +720,7 @@ manual:
   mov si, c_azul
   call prints
   
-  ;Colocando a string instrucao1
+  ;colocando a string manual_2
   mov ah, 02h  ;Setando o cursor
   mov bh, 0    ;Pagina 0
   mov dh, 7    ;Linha
@@ -751,7 +730,7 @@ manual:
   mov si, manual_2
   call prints
  
-  ;Colocando a string instrucao2
+  ;colocando a string manual_3
   mov ah, 02h  ;Setando o cursor
   mov bh, 0    ;Pagina 0
   mov dh, 9    ;Linha
@@ -760,7 +739,7 @@ manual:
   mov si, manual_3
   call prints
  
-  ;Colocando a string instrucao3
+  ;Colocando a string manual_4
   mov ah, 02h  ;Setando o cursor
   mov bh, 0    ;Pagina 0
   mov dh, 11   ;Linha
@@ -769,7 +748,7 @@ manual:
   mov si, manual_4
   call prints
  
-  ;Colocando a string instrucao4
+  ;Colocando a string manual_5
   mov ah, 02h  ;Setando o cursor
   mov bh, 0    ;Pagina 0
   mov dh, 13   ;Linha
@@ -778,7 +757,7 @@ manual:
   mov si, manual_5
   call prints
  
-  ;Colocando a string instrucao5
+  ;Colocando a string manual_6
   mov ah, 02h  ;Setando o cursor
   mov bh, 0    ;Pagina 0
   mov dh, 20   ;Linha
@@ -786,7 +765,8 @@ manual:
   int 10h
   mov si, manual_6
   call prints
- 
+
+  ;colocando a string esc_msg
   mov ah, 02h  ;Setando o cursor
   mov bh, 0    ;Pagina 0
   mov dh, 25   ;Linha
@@ -809,7 +789,8 @@ creditos:
   mov bl, 0
   int 10h
  
-  ;Colocando o Titulo
+  ;Colocando a string creditos_1
+
   mov ah, 02h  ;Setando o cursor
   mov bh, 0    ;Pagina 0
   mov dh, 3    ;Linha
@@ -819,7 +800,8 @@ creditos:
   mov si, creditos_1
   call prints
  
-  ;Colocando a s;Colocando o Titulo
+  ;Colocando a string creditos_2
+
   mov ah, 02h  ;Setando o cursor
   mov bh, 0    ;Pagina 0
   mov dh, 10    ;Linhamake
@@ -828,7 +810,8 @@ creditos:
   mov si, creditos_2
   call prints
  
-  ;Colocando a string jogar
+  ;Colocando a string creditos_3
+
   mov ah, 02h  ;Setando o cursor
   mov bh, 0    ;Pagina 0
   mov dh, 15   ;Linha
@@ -837,7 +820,8 @@ creditos:
   mov si, creditos_3
   call prints
  
-  ;Colocando a string intrucoes
+  ;Colocando a string creditos_4
+
   mov ah, 02h  ;Setando o cursor
   mov bh, 0    ;Pagina 0
   mov dh, 20   ;Linha
@@ -846,7 +830,8 @@ creditos:
   mov si, creditos_4
   call prints
  
-  ;Colocando a string creditos
+  ;Colocando a string esc_msg
+
   mov ah, 02h  ;Setando o cursor
   mov bh, 0    ;Pagina 0
   mov dh, 25   ;Linha
